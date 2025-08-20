@@ -1,0 +1,16 @@
+<div class="form-container">
+  <h2 class="form-title">DrinkRight Distributor Login</h2>
+  
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+    <div class="form-group">
+      <label for="distributorCode">Distributor Code</label>
+      <input type="text" id="distributorCode" formControlName="distributorCode" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" formControlName="password" required>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Login</button>
+  </form>
+  <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+</div>

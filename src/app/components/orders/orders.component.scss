@@ -1,0 +1,162 @@
+.orders-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.date-picker-container {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.date-picker-container input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.loading-spinner,
+.no-orders {
+    text-align: center;
+    padding: 40px;
+    color: #777;
+}
+
+.orders-table-wrapper {
+    overflow-x: auto;
+    /* For mobile responsiveness */
+}
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.orders-table th,
+.orders-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.orders-table th {
+    background-color: #f2f2f2;
+    font-weight: 600;
+}
+
+.orders-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 12px;
+    color: white;
+    font-size: 0.8rem;
+    margin-bottom: 4px;
+    text-transform: capitalize;
+    cursor: default;
+
+    &.pending {
+        background-color: #6c757d;
+    }
+
+    &.in.transit {
+        background-color: #fca311;
+    }
+
+    &.complete {
+        background-color: #2a9d8f;
+    }
+
+    &.cancelled {
+        background-color: #d62828;
+    }
+}
+
+.state-badge {
+    padding: 5px 10px;
+    border-radius: 12px;
+    color: white;
+    font-size: 0.8rem;
+    margin-bottom: 4px;
+    text-transform: capitalize;
+    background-color: #6c757d;
+    cursor: default;
+
+    &.pending {
+        background-color: #6c757d;
+    }
+
+    &.in.transit {
+        background-color: #fca311;
+    }
+
+    &.delivered {
+        background-color: #2a9d8f;
+    }
+
+    &.cancelled {
+        background-color: #d62828;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .orders-table th,
+    .orders-table td {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+}
+
+
+.order-details {
+    min-width: 115px;
+}
+
+.party {
+    min-width: 140px;
+    text-align: center;
+}
+
+.address {
+    min-width: 140px;
+}
+
+.state {
+    min-width: 130px
+}
+
+.call-button {
+    margin-top: 10px;
+    background-color: gold;
+    border: solid black 1px;
+    color: black;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+td {
+    border: none !important;
+}
+
+
+tr {
+    border: solid gray 0.5px !important;
+}
+
+
+.btn-status{
+    border-radius: 12px;
+}

@@ -1,0 +1,71 @@
+<div class="orders-container">
+    <h2>Your Orders</h2>
+
+    <div class="date-picker-container">
+        <label for="orderDate">Select Date:</label>
+        <input type="date" id="orderDate" [(ngModel)]="selectedDate" (change)="loadOrders()">
+    </div>
+
+    <div *ngIf="isLoading" class="loading-spinner">Loading...</div>
+
+    <div *ngIf="!isLoading && orders.length === 0" class="no-orders">
+        No orders found for the selected criteria.
+    </div>
+
+    <div class="orders-table-wrapper" *ngIf="!isLoading && orders.length > 0">
+        <table class="orders-table">
+            <thead>
+                <tr>
+                    <th class="order-details">Order Details</th>
+
+                    <th class="party">Party</th>
+                    <!-- <th>Phone Number</th> -->
+                    <th class="address">Address</th>
+                    <th class="state">Order Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let order of orders">
+                    <td>
+                        <b style="margin-bottom: 12px;">Order #{{ order.orderId }}</b>
+                        <br>
+                        {{ order.orderTimestamp.toDate() | date:'short' }}
+                        <br>
+                        <b style="letter-spacing: 0.5mm;margin-top: 12px;">{{order.orderDetails }}</b>
+                    </td>
+
+                    <td style="text-align: center;">
+                        {{ order.name }}
+                        <br>
+                        <b style="letter-spacing: 0.5mm;">({{ getRcode(order) }})</b>
+                        <br>
+                        <button (click)="callNumber(order.phoneNumber)" class="call-button">
+                            📞 {{ order.phoneNumber }}
+                        </button>
+                    </td>
+
+                    <td>{{ order.address }}</td>
+                    <td>
+                        <button class="status-badge" [ngClass]="order.status">{{ order.status.toUpperCase() }}</button>
+                        <br>
+                        <button class="state-badge" [ngClass]="getOrderStateClass(order)">{{ getOrderState(order) }}</button>
+                    </td>
+                    <td class="action-buttons">
+                        @if(order.status === 'pending'){
+                        <ng-container>
+                            <button class="btn-status btn-transit" appLongPress
+                                (longPress)="updateStatus(order, 'In Transit')">
+                                In Transit
+                            </button>
+                            <button class="btn-status btn-delivered" appLongPress
+                                (longPress)="updateStatus(order, 'Delivered')">
+                                Delivered
+                            </button>
+                        </ng-container>
+                        }
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

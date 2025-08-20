@@ -1,12 +1,22 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+import { AuthService } from './services/auth.service';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [CommonModule, RouterOutlet, NavbarComponent], // Import necessary components/modules
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrls: ['./app.scss']
 })
 export class App {
-  protected readonly title = signal('drinkright-distributors');
+  title = 'DrinkRight Distributors';
+
+  constructor(private authService: AuthService) { }
+
+  isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
+  }
 }
