@@ -40,7 +40,7 @@
     border: 1px solid #ddd;
     padding: 12px;
     text-align: left;
-    vertical-align: middle;
+    vertical-align: top;
 }
 
 .orders-table th {
@@ -122,7 +122,7 @@
 
 
 .order-details {
-    min-width: 115px;
+    min-width: 150px;
 }
 
 .party {
@@ -135,7 +135,8 @@
 }
 
 .state {
-    min-width: 130px
+    min-width: 130px;
+    vertical-align: top!important;
 }
 
 .call-button {
@@ -159,4 +160,5 @@ tr {
 
 .btn-status{
     border-radius: 12px;
+    cursor: pointer;
 }

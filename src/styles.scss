@@ -99,6 +99,16 @@ body {
 }
 
 
+.btn-cancel {
+    background-color: #e76f51;
+    /* A soothing, slightly muted reddish-orange */
+}
+
+.btn-cancel:hover {
+    background-color: #d4654b;
+    /* A darker, more saturated shade for the hover effect */
+}
+
 /* General Helpers */
 .error-message {
     color: #d90429;

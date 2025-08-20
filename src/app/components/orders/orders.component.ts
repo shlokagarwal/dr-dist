@@ -31,6 +31,7 @@ export class OrdersComponent implements OnInit {
         try {
             const date = new Date(this.selectedDate);
             this.orders = await this.orderService.getOrdersByDate(date);
+            console.log(this.orders);
         } catch (error) {
             console.error("Error loading orders:", error);
         } finally {
@@ -49,7 +50,7 @@ export class OrdersComponent implements OnInit {
         return istTime.toISOString().replace('T', ' ').substring(0, 19) + ' IST';
     }
 
-    updateStatus(order: any, newState: 'In Transit' | 'Delivered') {
+    updateStatus(order: any, newState: 'Cancelled' | 'Delivered') {
         if (confirm(`Are you sure you want to mark this order as "${newState}"?`)) {
             // Create the new log entry
             const timestamp = this.getCurrentISTTimestamp();
@@ -61,25 +62,39 @@ export class OrdersComponent implements OnInit {
             if (!order.logs) {
                 order.logs = [];
             }
-            let newStatus = '';
-            const newStateId = this.ORDER_STATES.indexOf(newState) + 1;
-            if (newStateId == this.ORDER_STATES.length) {
-                newStatus = 'complete';
-            }
-            else {
-                newStatus = 'pending';
-            }
-
             // Add the new log entry to the logs array
             order.logs.push(newLogEntry);
+            let newStatus = '';
+            if (newState === 'Cancelled') {
+                newStatus = 'cancelled';
+                // Continue with the update
+                if (order.logs.length > 0) {
+                    this.orderService.updateOrderStatus(order.id, order.currentState, newStatus, order.logs)
+                        .then(() => { this.loadOrders(); })
+                        .catch(err => console.error("Error updating status:", err));
+                }
 
-
-            // Continue with the update
-            if (order.logs.length > 0) {
-                this.orderService.updateOrderStatus(order.id, newStateId, newStatus, order.logs)
-                    .then(() => { this.loadOrders(); })
-                    .catch(err => console.error("Error updating status:", err));
             }
+            else {
+                const newStateId = this.ORDER_STATES.indexOf(newState) + 1;
+                if (newStateId == this.ORDER_STATES.length) {
+                    newStatus = 'complete';
+                }
+                else {
+                    newStatus = 'pending';
+                }
+
+                if (order.logs.length > 0) {
+                    this.orderService.updateOrderStatus(order.id, newStateId, newStatus, order.logs)
+                        .then(() => { this.loadOrders(); })
+                        .catch(err => console.error("Error updating status:", err));
+                }
+
+            }
+
+
+
+
         }
     }
     getRcode(order: any): string {

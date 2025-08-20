@@ -4,7 +4,7 @@ import { takeUntil, switchMap, filter } from 'rxjs/operators';
 
 @Directive({
     selector: '[appLongPress]',
-    standalone: true, // Make the directive standalone
+    standalone: true,
 })
 export class LongPressDirective {
     @Output() longPress = new EventEmitter<void>();
@@ -23,19 +23,20 @@ export class LongPressDirective {
     }
 
     @HostListener('mousedown')
-    onMouseDown() { this.mouseDown$.next(); }
+    @HostListener('touchstart', ['$event'])
+    onMouseDown(event?: Event) {
+        if (event) {
+            event.preventDefault(); // Prevent default touch behavior
+        }
+        this.mouseDown$.next();
+    }
 
     @HostListener('mouseup')
-    onMouseUp() { this.mouseUp$.next(); }
-
     @HostListener('mouseleave')
-    onMouseLeave() { this.mouseUp$.next(); }
-
-    @HostListener('touchstart')
-    onTouchStart() { this.mouseDown$.next(); }
-
     @HostListener('touchend')
-    onTouchEnd() { this.mouseUp$.next(); }
+    onMouseUp() {
+        this.mouseUp$.next();
+    }
 
     ngOnDestroy() {
         this.subscription.unsubscribe();

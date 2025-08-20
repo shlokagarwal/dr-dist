@@ -1,0 +1,24 @@
+{
+  "name": "DrinkRight Distributor",
+  "short_name": "DrinkRight Distributor",
+  "icons": [
+    {
+      "src": "/touch180x180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/touch167x167.png",
+      "sizes": "167x167",
+      "type": "image/png"
+    },
+    {
+      "src": "/touch152x152.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}

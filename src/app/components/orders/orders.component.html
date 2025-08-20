@@ -1,6 +1,24 @@
 <div class="orders-container">
-    <h2>Your Orders</h2>
-
+    <div style="display: flex; flex-direction: row; justify-content: space-between;align-items: center;">
+        <h2>Your Orders</h2>
+        <span (click)="loadOrders()" style="
+        background-color: #4A90E2;
+        color: white;
+        border: none;
+        padding: 4px;
+        border-radius: 8px;
+        font-size: 20px;
+        height: 30px;
+        width: 30px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+    " onmouseover="this.style.backgroundColor='#357abd'" onmouseout="this.style.backgroundColor='#4A90E2'">
+            &#x21bb;
+        </span>
+    </div>
     <div class="date-picker-container">
         <label for="orderDate">Select Date:</label>
         <input type="date" id="orderDate" [(ngModel)]="selectedDate" (change)="loadOrders()">
@@ -16,24 +34,17 @@
         <table class="orders-table">
             <thead>
                 <tr>
-                    <th class="order-details">Order Details</th>
-
                     <th class="party">Party</th>
+                    <th class="order-details">Order Details</th>
                     <!-- <th>Phone Number</th> -->
                     <th class="address">Address</th>
-                    <th class="state">Order Status</th>
                     <th>Actions</th>
+                    <th style="vertical-align: top!important;" class="state">Order Status</th>
+
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let order of orders">
-                    <td>
-                        <b style="margin-bottom: 12px;">Order #{{ order.orderId }}</b>
-                        <br>
-                        {{ order.orderTimestamp.toDate() | date:'short' }}
-                        <br>
-                        <b style="letter-spacing: 0.5mm;margin-top: 12px;">{{order.orderDetails }}</b>
-                    </td>
 
                     <td style="text-align: center;">
                         {{ order.name }}
@@ -45,25 +56,39 @@
                         </button>
                     </td>
 
-                    <td>{{ order.address }}</td>
                     <td>
-                        <button class="status-badge" [ngClass]="order.status">{{ order.status.toUpperCase() }}</button>
+                        <b style="margin-bottom: 12px;">ON: {{ order.orderId }}</b>
                         <br>
-                        <button class="state-badge" [ngClass]="getOrderStateClass(order)">{{ getOrderState(order) }}</button>
+                        {{ order.orderTimestamp.toDate() | date:'d MMM h:mm a' }}
+                        <br>
+                        <b>{{order.orderDetails }}</b>
                     </td>
+
+
+                    <td>{{ order.address }}</td>
+
                     <td class="action-buttons">
                         @if(order.status === 'pending'){
                         <ng-container>
-                            <button class="btn-status btn-transit" appLongPress
-                                (longPress)="updateStatus(order, 'In Transit')">
-                                In Transit
-                            </button>
+
                             <button class="btn-status btn-delivered" appLongPress
                                 (longPress)="updateStatus(order, 'Delivered')">
                                 Delivered
                             </button>
+
+                            <button class="btn-status btn-cancel" appLongPress
+                                (longPress)="updateStatus(order, 'Cancelled')">
+                                Cancelled
+                            </button>
                         </ng-container>
                         }
+                    </td>
+                    <td>
+                        <button class="status-badge" [ngClass]="order.status">{{ order.status.toUpperCase() == 'PENDING'
+                            ? 'PENDING' : 'CLOSED' }}</button>
+                        <br>
+                    </td>
+
                 </tr>
             </tbody>
         </table>
